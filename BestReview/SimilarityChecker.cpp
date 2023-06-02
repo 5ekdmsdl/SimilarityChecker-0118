@@ -5,47 +5,32 @@ using namespace std;
 class SimilarityChecker
 {
 public:
-	explicit SimilarityChecker(const string answer) : answer(answer)
-	{
-		assertValidAnswer(answer);
-	}
-	float GetLengthScore(string guess);
+	float GetLengthScore(const string& str1, const string& str2);
 
 private:
-	void assertValidAnswer(const string answer);
-	void assertValidInput(string guess);
-	bool isMAXScore(string guess);
-	bool isZeroScore(string guess);
+	void CheckValidInput(string guess);
+	bool isMAXScore(const string& str1, const string& str2);
+	bool isZeroScore(const string& str1, const string& str2);
 	float calculateWithFormula(int longerLength, int shorterLength);
-	float CalculateScore(string guess);
+	float calculateScore(const string& str1, const string& str2);
 
 private:
-	string answer;
 	const int MAX_SCORE = 60;
 };
 
 
-float SimilarityChecker::GetLengthScore(string guess)
+float SimilarityChecker::GetLengthScore(const string& str1, const string& str2)
 {
-	assertValidInput(guess);
+	CheckValidInput(str1);
+	CheckValidInput(str2);
 
-	if (isMAXScore(guess)) return MAX_SCORE;
-	if (isZeroScore(guess)) return 0;
+	if (isMAXScore(str1, str2)) return MAX_SCORE;
+	if (isZeroScore(str1, str2)) return 0;
 
-	return CalculateScore(guess);
+	return calculateScore(str1, str2);
 }
 
-void SimilarityChecker::assertValidAnswer(const string answer)
-{
-	if (answer.length() == 0) throw invalid_argument("Answer can't be empty string\n");
-	for (auto ch : answer)
-	{
-		if ('A' <= ch && ch <= 'Z') continue;
-		throw invalid_argument("Answer must only contain characters\n");
-	}
-}
-
-void SimilarityChecker::assertValidInput(string guess)
+void SimilarityChecker::CheckValidInput(string guess)
 {
 	if (guess.length() == 0) throw invalid_argument("Please input a string with at least one letter\n");
 	for (auto ch : guess)
@@ -55,23 +40,23 @@ void SimilarityChecker::assertValidInput(string guess)
 	}
 }
 
-bool SimilarityChecker::isMAXScore(string guess)
+bool SimilarityChecker::isMAXScore(const string& str1, const string& str2)
 {
-	return answer.length() == guess.length();
+	return str1.length() == str2.length();
 }
 
-bool SimilarityChecker::isZeroScore(string guess)
+bool SimilarityChecker::isZeroScore(const string& str1, const string& str2)
 {
-	int longerLength = max(answer.length(), guess.length());
-	int shorterLength = min(answer.length(), guess.length());
-	if (longerLength > shorterLength * 2) return true;
+	int longerLength = max(str2.length(), str1.length());
+	int shorterLength = min(str2.length(), str1.length());
+	if (longerLength >= shorterLength * 2) return true;
 	return false;
 }
 
-float SimilarityChecker::CalculateScore(string guess)
+float SimilarityChecker::calculateScore(const string& str1, const string& str2)
 {
-	int longerLength = max(answer.length(), guess.length());
-	int shorterLength = min(answer.length(), guess.length());
+	int longerLength = max(str2.length(), str1.length());
+	int shorterLength = min(str2.length(), str1.length());
 	return calculateWithFormula(longerLength, shorterLength);
 }
 
