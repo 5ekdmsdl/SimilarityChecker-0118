@@ -33,16 +33,16 @@ bool SimilarityChecker::IsMAXScore(string guess)
 
 bool SimilarityChecker::IsZeroScore(string guess)
 {
-	int longerLength = (answer.length() > guess.length()) ? answer.length() : guess.length();
-	int shorterLength = (answer.length() > guess.length()) ? guess.length() : answer.length();
+	int longerLength = max(answer.length(), guess.length());
+	int shorterLength = min(answer.length(), guess.length());
 	if (longerLength > shorterLength * 2) return true;
 	return false;
 }
 
 float SimilarityChecker::CalculateScore(string guess)
 {
-	int longerLength = (answer.length() > guess.length()) ? answer.length() : guess.length();
-	int shorterLength = (answer.length() > guess.length()) ? guess.length() : answer.length();
+	int longerLength = max(answer.length(), guess.length());
+	int shorterLength = min(answer.length(), guess.length());
 	return calculateWithFormula(longerLength, shorterLength);
 }
 
