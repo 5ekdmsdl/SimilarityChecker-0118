@@ -7,16 +7,13 @@ class SimilarityChecker
 public:
 	explicit SimilarityChecker(const string answer) : answer(answer)
 	{
-		if (answer.length() == 0) throw invalid_argument("Answer can't be empty string\n");
-		for(auto ch : answer)
-		{
-			if('A' <= ch && ch <= 'Z') continue;
-			throw invalid_argument("Answer must only contain characters\n");
-		}
-	};
+		AssertValidAnswer(answer);
+	}
 	float getLengthScore(string guess);
 
 private:
+	void AssertValidAnswer(const string answer);
+	void AssertValidInput(string guess);
 	bool IsMAXScore(string guess);
 	bool IsZeroScore(string guess);
 	float calculateWithFormula(int longerLength, int shorterLength);
@@ -27,7 +24,28 @@ private:
 	const int MAX_SCORE = 60;
 };
 
+
 float SimilarityChecker::getLengthScore(string guess)
+{
+	AssertValidInput(guess);
+
+	if (IsMAXScore(guess)) return MAX_SCORE;
+	if (IsZeroScore(guess)) return 0;
+
+	return CalculateScore(guess);
+}
+
+void SimilarityChecker::AssertValidAnswer(const string answer)
+{
+	if (answer.length() == 0) throw invalid_argument("Answer can't be empty string\n");
+	for (auto ch : answer)
+	{
+		if ('A' <= ch && ch <= 'Z') continue;
+		throw invalid_argument("Answer must only contain characters\n");
+	}
+}
+
+void SimilarityChecker::AssertValidInput(string guess)
 {
 	if (guess.length() == 0) throw invalid_argument("Please input a string with at least one letter\n");
 	for (auto ch : guess)
@@ -35,11 +53,6 @@ float SimilarityChecker::getLengthScore(string guess)
 		if ('A' <= ch && ch <= 'Z') continue;
 		throw invalid_argument("Input string must only contain characters\n");
 	}
-
-	if (IsMAXScore(guess)) return MAX_SCORE;
-	if (IsZeroScore(guess)) return 0;
-
-	return CalculateScore(guess);
 }
 
 bool SimilarityChecker::IsMAXScore(string guess)
