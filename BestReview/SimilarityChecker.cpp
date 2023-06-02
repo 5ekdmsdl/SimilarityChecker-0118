@@ -5,7 +5,7 @@ class SimilarityChecker
 {
 public:
 	explicit SimilarityChecker(const string answer) : answer(answer) {};
-	float getScore1(string guess);
+	float getLengthScore(string guess);
 
 private:
 	bool IsMAXScore(string guess);
@@ -18,7 +18,7 @@ private:
 	const int MAX_SCORE = 60;
 };
 
-float SimilarityChecker::getScore1(string guess)
+float SimilarityChecker::getLengthScore(string guess)
 {
 	if (IsMAXScore(guess)) return MAX_SCORE;
 	if (IsZeroScore(guess)) return 0;

@@ -6,17 +6,23 @@
 TEST(SimilarityChecker, LengthDoubleLonger)
 {
 	SimilarityChecker checker("A");
-	EXPECT_EQ(0, checker.getScore1("BB"));
+	EXPECT_EQ(0, checker.getLengthScore("BB"));
 }
 
 TEST(SimilarityChecker, PerfectMatch)
 {
 	SimilarityChecker checker("ASD");
-	EXPECT_EQ(60, checker.getScore1("DSA"));
+	EXPECT_EQ(60, checker.getLengthScore("DSA"));
 }
 
 TEST(SimilarityChecker, PartialScore1)
 {
 	SimilarityChecker checker("AAABB");
-	EXPECT_EQ(20.0, checker.getScore1("BAA"));
+	EXPECT_EQ(20.0, checker.getLengthScore("BAA"));
+}
+
+TEST(SimilarityChecker, PartialScore2)
+{
+	SimilarityChecker checker("AA");
+	EXPECT_EQ(30.0, checker.getLengthScore("AAA"));
 }
