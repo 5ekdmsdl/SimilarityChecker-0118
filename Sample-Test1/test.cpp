@@ -16,35 +16,35 @@ TEST(SimilarityChecker, InvalidAnswer_containsOtherthanChar)
 TEST(SimilarityChecker, InvalidInput_empty)
 {
 	SimilarityChecker checker("ABC");
-	EXPECT_THROW(checker.getLengthScore(""), std::invalid_argument);
+	EXPECT_THROW(checker.GetLengthScore(""), std::invalid_argument);
 }
 
 TEST(SimilarityChecker, InvalidInput_containsOtherthanChar)
 {
 	SimilarityChecker checker("ABC");
-	EXPECT_THROW(checker.getLengthScore("1ABC^"), std::invalid_argument);
+	EXPECT_THROW(checker.GetLengthScore("1ABC^"), std::invalid_argument);
 }
 
 TEST(SimilarityChecker, LengthDoubleLonger)
 {
 	SimilarityChecker checker("A");
-	EXPECT_EQ(0, checker.getLengthScore("BB"));
+	EXPECT_EQ(0, checker.GetLengthScore("BB"));
 }
 
 TEST(SimilarityChecker, PerfectMatch)
 {
 	SimilarityChecker checker("ASD");
-	EXPECT_EQ(60, checker.getLengthScore("DSA"));
+	EXPECT_EQ(60, checker.GetLengthScore("DSA"));
 }
 
 TEST(SimilarityChecker, PartialScore1)
 {
 	SimilarityChecker checker("AAABB");
-	EXPECT_EQ(20.0, checker.getLengthScore("BAA"));
+	EXPECT_EQ(20.0, checker.GetLengthScore("BAA"));
 }
 
 TEST(SimilarityChecker, PartialScore2)
 {
 	SimilarityChecker checker("AA");
-	EXPECT_EQ(30.0, checker.getLengthScore("AAA"));
+	EXPECT_EQ(30.0, checker.GetLengthScore("AAA"));
 }
