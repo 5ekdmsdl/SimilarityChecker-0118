@@ -15,9 +15,8 @@ TEST(SimilarityChecker, PerfectMatch)
 	EXPECT_EQ(60, checker.getScore1("DSA"));
 }
 
-/*
 TEST(SimilarityChecker, PartialScore1)
 {
 	SimilarityChecker checker("AAABB");
-	EXPECT_EQ(60, checker.getScore1("BAA"));
-}*/
+	EXPECT_EQ(20.0, checker.getScore1("BAA"));
+}
