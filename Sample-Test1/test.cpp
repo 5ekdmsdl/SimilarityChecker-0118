@@ -3,6 +3,28 @@
 #include <gtest/gtest.h>
 #include "../BestReview/SimilarityChecker.cpp"
 
+TEST(SimilarityChecker, InvalidAnswer_empty)
+{
+	EXPECT_THROW(SimilarityChecker checker(""); , std::invalid_argument);
+}
+
+TEST(SimilarityChecker, InvalidAnswer_containsOtherthanChar)
+{
+	EXPECT_THROW(SimilarityChecker checker("1ABC^"); , std::invalid_argument);
+}
+
+TEST(SimilarityChecker, InvalidInput_empty)
+{
+	SimilarityChecker checker("ABC");
+	EXPECT_THROW(checker.getLengthScore(""), std::invalid_argument);
+}
+
+TEST(SimilarityChecker, InvalidInput_containsOtherthanChar)
+{
+	SimilarityChecker checker("ABC");
+	EXPECT_THROW(checker.getLengthScore("1ABC^"), std::invalid_argument);
+}
+
 TEST(SimilarityChecker, LengthDoubleLonger)
 {
 	SimilarityChecker checker("A");

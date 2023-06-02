@@ -1,10 +1,19 @@
+#include <stdexcept>
 #include <string>
 using namespace std;
 
 class SimilarityChecker
 {
 public:
-	explicit SimilarityChecker(const string answer) : answer(answer) {};
+	explicit SimilarityChecker(const string answer) : answer(answer)
+	{
+		if (answer.length() == 0) throw invalid_argument("Answer can't be empty string\n");
+		for(auto ch : answer)
+		{
+			if('A' <= ch && ch <= 'Z') continue;
+			throw invalid_argument("Answer must only contain characters\n");
+		}
+	};
 	float getLengthScore(string guess);
 
 private:
@@ -20,6 +29,13 @@ private:
 
 float SimilarityChecker::getLengthScore(string guess)
 {
+	if (guess.length() == 0) throw invalid_argument("Please input a string with at least one letter\n");
+	for (auto ch : guess)
+	{
+		if ('A' <= ch && ch <= 'Z') continue;
+		throw invalid_argument("Input string must only contain characters\n");
+	}
+
 	if (IsMAXScore(guess)) return MAX_SCORE;
 	if (IsZeroScore(guess)) return 0;
 
